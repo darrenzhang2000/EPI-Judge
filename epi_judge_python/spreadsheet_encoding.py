@@ -1,9 +1,13 @@
 from test_framework import generic_test
 
 
-def ss_decode_col_id(col: str) -> int:
-    # TODO - you fill in here.
-    return 0
+def ss_decode_col_id(w: str) -> int:
+        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        n = 0
+        for i in range(len(w)):
+            cIdx = letters.index(w[i])
+            n = n * 26 + cIdx + 1
+        return n
 
 
 if __name__ == '__main__':
