@@ -2,9 +2,17 @@ from test_framework import generic_test
 
 
 def snake_string(s: str) -> str:
-    # TODO - you fill in here.
-    return ''
-
+    top = []
+    mid = []
+    bot = []
+    for i, c in enumerate(s):
+        if i % 2 == 0:
+            mid.append(c)
+        elif i % 4 == 1:
+            top.append(c)
+        else:
+            bot.append(c)
+    return "".join(top + mid + bot)
 
 if __name__ == '__main__':
     exit(

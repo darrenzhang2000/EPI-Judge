@@ -1,13 +1,8 @@
 from test_framework import generic_test
-
+from functools import reduce
 
 def ss_decode_col_id(w: str) -> int:
-        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        n = 0
-        for i in range(len(w)):
-            cIdx = letters.index(w[i])
-            n = n * 26 + cIdx + 1
-        return n
+        return reduce(lambda acc, c: 26 * acc + ord(c) - ord('A') + 1 , w, 0)
 
 
 if __name__ == '__main__':
