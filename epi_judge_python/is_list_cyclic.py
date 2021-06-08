@@ -26,7 +26,6 @@ def has_cycle(head: ListNode) -> Optional[ListNode]:
         cycleLength += 1
         if slow is fast:
             break
-    print('q')
     cycleIt = head
     for _ in range(cycleLength):
         cycleIt = cycleIt.next 
