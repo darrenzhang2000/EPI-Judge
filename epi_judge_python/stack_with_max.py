@@ -1,23 +1,53 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
-
+import collections
 
 class Stack:
+    '''
+    average running time 62 us
+    median running time 28 us
+    '''
+    ElementWithCachedMax = collections.namedtuple('ElementWithCachedMax', ('element', 'max'))
+
+    def __init__(self):
+        self._element_with_cached_max: List[Stack.ElementWithCachedMax] = []
     def empty(self) -> bool:
-        # TODO - you fill in here.
-        return True
+        return len(self._element_with_cached_max) == 0
 
     def max(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        return self._element_with_cached_max[-1].max
 
     def pop(self) -> int:
-        # TODO - you fill in here.
-        return 0
+        return self._element_with_cached_max.pop().element
 
     def push(self, x: int) -> None:
-        # TODO - you fill in here.
-        return
+        self._element_with_cached_max.append(self.ElementWithCachedMax(x, x if self.empty() else max(x, self.max())))
+
+# class Stack:
+#     '''
+#     average running time 62 us
+#     median running time 28 us
+#     '''
+#     def __init__(self):
+#         self.maxes = []
+#         self.nums = []
+#     def empty(self) -> bool:
+#         return len(self.nums) == 0
+
+#     def max(self) -> int:
+#         return self.maxes[-1] if not self.empty() else float('-inf')
+
+#     def pop(self) -> int:
+#         num = self.nums[-1]
+#         if self.nums[-1] == self.maxes[-1]:
+#             self.maxes.pop()
+#         self.nums.pop()
+#         return num
+
+#     def push(self, x: int) -> None:
+#         self.nums.append(x)
+#         if not len(self.maxes) or x > self.maxes[-1]:
+#             self.maxes.append(x)
 
 
 def stack_tester(ops):
