@@ -17,8 +17,14 @@ def postorder(node):
     if not node:
         return Res()
     leftRes = postorder(node.left) 
+    if not leftRes.isValid:
+        return leftRes
+
     rightRes = postorder(node.right)
-    isValid = leftRes.isValid and rightRes.isValid and abs(leftRes.maxHeight - rightRes.maxHeight) <= 1
+    if not rightRes.isValid:
+        return rightRes
+
+    isValid = abs(leftRes.maxHeight - rightRes.maxHeight) <= 1
     return Res(isValid, leftRes.maxHeight, rightRes.maxHeight)
     
 
