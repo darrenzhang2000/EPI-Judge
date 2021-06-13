@@ -12,12 +12,8 @@ def has_path_sum(tree: BinaryTreeNode, remaining_weight: int) -> bool:
         return remaining_weight == 0
 
     # non-leaf
-    if has_path_sum(tree.left, remaining_weight):
-        return True
-    if has_path_sum(tree.right, remaining_weight):
-        return True
+    return has_path_sum(tree.left, remaining_weight) or has_path_sum(tree.right, remaining_weight)
 
-    return False
 
 if __name__ == '__main__':
     exit(
