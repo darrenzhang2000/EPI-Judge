@@ -7,12 +7,31 @@ from test_framework.binary_tree_utils import must_find_node, strip_parent_link
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
+def findPath(tree, node, res, path):
+    if not tree:
+        return
+    newPath = path[:] + [tree]
+    if tree is node:
+        res.path = newPath[:]
+    findPath(tree.left, node, res, newPath)
+    findPath(tree.right, node, res, newPath)
+
+class Result:
+    def __init__(self):
+        self._found = False
+        self.path = []
 
 def lca(tree: BinaryTreeNode, node0: BinaryTreeNode,
         node1: BinaryTreeNode) -> Optional[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return None
-
+        leftR = Result()
+        findPath(tree, node0, leftR, [])
+        rightR = Result()
+        findPath(tree, node1, rightR, [])
+        path0 = leftR.path
+        path1 = rightR.path
+        for i in range(min(len(path0), len(path1)) - 1, -1, -1):
+            if path0[i] is path1[i]:
+                return path0[i]
 
 @enable_executor_hook
 def lca_wrapper(executor, tree, key1, key2):
