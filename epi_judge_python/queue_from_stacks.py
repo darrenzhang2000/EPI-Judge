@@ -19,22 +19,18 @@ class Queue:
     '''
     def __init__(self):
         self._queueAsStack = []
-
-    # O(n) time and space
-    def flip(self, stack):
-        temp = []
-        for _ in range(len(stack)):
-            temp.append(stack.pop())
-        return temp
+        self._stack = []
 
     # O(n) time
     def enqueue(self, x: int) -> None:
-        flippedQ = self.flip(self._queueAsStack)
-        flippedQ.append(x)
-        self._queueAsStack = self.flip(flippedQ)
+        while self._queueAsStack:
+            self._stack.append(self._queueAsStack.pop())
+        self._stack.append(x)
 
     # O(1) time
     def dequeue(self) -> int:
+        while self._stack:
+            self._queueAsStack.append(self._stack.pop())
         return self._queueAsStack.pop()
 
 
