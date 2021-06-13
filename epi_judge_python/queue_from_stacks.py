@@ -21,16 +21,15 @@ class Queue:
         self._queueAsStack = []
         self._stack = []
 
-    # O(n) time
+    # O(1) time
     def enqueue(self, x: int) -> None:
-        while self._queueAsStack:
-            self._stack.append(self._queueAsStack.pop())
         self._stack.append(x)
 
-    # O(1) time
+    # O(n) time
     def dequeue(self) -> int:
-        while self._stack:
-            self._queueAsStack.append(self._stack.pop())
+        if not self._queueAsStack:
+            while self._stack:
+                self._queueAsStack.append(self._stack.pop())
         return self._queueAsStack.pop()
 
 
