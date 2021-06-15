@@ -12,13 +12,23 @@ class BinaryTreeNode:
         self.next = None  # Populates this field.
 
 def construct_right_sibling(tree: BinaryTreeNode) -> None:
-    if not tree or not tree.left:
-        return
-    tree.left.next = tree.right
-    if tree.next:
-        tree.right.next = tree.next.left
-    construct_right_sibling(tree.left)
-    construct_right_sibling(tree.right)
+    def populateChildrenNextField(node):
+        while node and node.left:
+            node.left.next = node.right
+            node.right.next = node.next and node.next.left
+            node = node.next
+    while tree and tree.left:
+        populateChildrenNextField(tree)
+        tree = tree.left
+
+# def construct_right_sibling(tree: BinaryTreeNode) -> None:
+#     if not tree or not tree.left:
+#         return
+#     tree.left.next = tree.right
+#     if tree.next:
+#         tree.right.next = tree.next.left
+#     construct_right_sibling(tree.left)
+#     construct_right_sibling(tree.right)
 
 # def construct_right_sibling(tree: BinaryTreeNode) -> None:
 #     if not tree: return
