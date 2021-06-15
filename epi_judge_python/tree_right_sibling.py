@@ -11,22 +11,30 @@ class BinaryTreeNode:
         self.right = None
         self.next = None  # Populates this field.
 
-
 def construct_right_sibling(tree: BinaryTreeNode) -> None:
-    if not tree: return
-    q = [tree]
-    while q:
-        newQ = []
-        for i in range(len(q)):
-            node = q[i]
-            if i + 1 < len(q):
-                nextNode = q[i + 1]
-                node.next = nextNode
-            if node.left != None:
-                newQ.append(node.left)
-                newQ.append(node.right)
-        q = newQ[:]
-    return tree
+    if not tree or not tree.left:
+        return
+    tree.left.next = tree.right
+    if tree.next:
+        tree.right.next = tree.next.left
+    construct_right_sibling(tree.left)
+    construct_right_sibling(tree.right)
+
+# def construct_right_sibling(tree: BinaryTreeNode) -> None:
+#     if not tree: return
+#     q = [tree]
+#     while q:
+#         newQ = []
+#         for i in range(len(q)):
+#             node = q[i]
+#             if i + 1 < len(q):
+#                 nextNode = q[i + 1]
+#                 node.next = nextNode
+#             if node.left != None:
+#                 newQ.append(node.left)
+#                 newQ.append(node.right)
+#         q = newQ[:]
+#     return tree
             
 
 def traverse_next(node):
