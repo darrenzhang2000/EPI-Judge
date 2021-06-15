@@ -5,11 +5,81 @@ from binary_tree_node import BinaryTreeNode
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
-
+from tree_connect_leaves import create_list_of_leaves
 
 def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+
+    # Computes the nodes from the root to the leftmost leaf.
+    def left_boundary(subtree):
+        if not subtree or (not subtree.left and not subtree.right):
+            return
+        exterior.append(subtree)
+        if subtree.left:
+            left_boundary(subtree.left)
+        else:
+            left_boundary(subtree.right)
+
+    # Computes the nodes from the rightmost leaf to the root.
+    def right_boundary(subtree):
+        if not subtree or (not subtree.left and not subtree.right):
+            return
+        if subtree.right:
+            right_boundary(subtree.right)
+        else:
+            right_boundary(subtree.left)
+        exterior.append(subtree)
+
+    # Compute the leaves in left-to-right order.
+    def leaves(subtree):
+        if not subtree:
+            return
+        if not subtree.left and not subtree.right:
+            exterior.append(subtree)
+            return
+        leaves(subtree.left)
+        leaves(subtree.right)
+
+    if not tree:
+        return []
+
+    exterior = [tree]
+    left_boundary(tree.left)
+    leaves(tree.left)
+    leaves(tree.right)
+    right_boundary(tree.right)
+    return exterior
+
+
+
+# def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
+#     return [tree] + getLeft(tree.left) + create_list_of_leaves(tree) + getRight(tree.right)
+
+# def leaf(node):
+#     return node and node.left == None and node.right == None
+
+# def getLeft(n):
+#     node = n
+#     res = []
+#     while node:
+#         if not leaf(node):
+#             res.append(node)
+#         if node.left:
+#             node = node.left
+#         else:
+#             node = node.right
+#     return res
+
+# def getRight(n):
+#     node = n
+#     res = []
+#     while node:
+#         if not leaf:
+#             res.append(node)
+#         if node.right:
+#             node = node.right
+#         else:
+#             node = node.left
+#     return list(reversed(res))
 
 
 def create_output_list(L):
