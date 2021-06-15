@@ -8,8 +8,17 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def create_list_of_leaves(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+    res = []
+    appendIfLeaf(tree, res)
+    return res
+
+def appendIfLeaf(node, res):
+    if not node:
+        return
+    if not node.left and not node.right:
+        res.append(node)
+    appendIfLeaf(node.left, res)
+    appendIfLeaf(node.right, res)
 
 
 @enable_executor_hook
