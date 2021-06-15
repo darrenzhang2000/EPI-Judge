@@ -12,9 +12,10 @@ def binary_tree_from_preorder_inorder(preorder: List[int],
     if not preorder: 
         return 
     preorderIdx = PreorderIdx()
-    return r(preorder, inorder, preorderIdx, 0, len(preorder) - 1)
+    valueIndexMap = {v: i for i, v in enumerate(inorder)}
+    return r(preorder, inorder, preorderIdx, 0, len(preorder) - 1, valueIndexMap)
 
-def r(preorder, inorder, preorderIdx, left, right):
+def r(preorder, inorder, preorderIdx, left, right, valueIndexMap):
     if left > right:
         return
 
@@ -22,9 +23,9 @@ def r(preorder, inorder, preorderIdx, left, right):
     preorderIdx.idx += 1
 
     root = BinaryTreeNode(value)
-    rootIdx = inorder.index(value)
-    root.left = r(preorder, inorder, preorderIdx, left, rootIdx - 1)
-    root.right = r(preorder, inorder, preorderIdx, rootIdx + 1, right)
+    rootIdx = valueIndexMap[value]
+    root.left = r(preorder, inorder, preorderIdx, left, rootIdx - 1, valueIndexMap)
+    root.right = r(preorder, inorder, preorderIdx, rootIdx + 1, right, valueIndexMap)
     return root
 
 
