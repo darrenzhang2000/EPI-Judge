@@ -9,8 +9,12 @@ DuplicateAndMissing = collections.namedtuple('DuplicateAndMissing',
 
 
 def find_duplicate_missing(A: List[int]) -> DuplicateAndMissing:
-    # TODO - you fill in here.
-    return DuplicateAndMissing(0, 0)
+    s = sum(set(A))
+    l = len(A)
+    total = sum(list(A))
+    dup = total - s
+    missing_el = (l - 1) * l // 2 - s
+    return (dup, missing_el)
 
 
 def res_printer(prop, value):
