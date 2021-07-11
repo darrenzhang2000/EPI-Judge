@@ -21,16 +21,24 @@ def smallest_nonconstructible_value(A: List[int]) -> int:
     -> n^2
     '''
     A.sort()
-    if not A or A[0] != 1:
-        return 1
-    v = 1
-    for i in range(1, len(A)):
-        n = A[i]
-        if n <= v or n == v + 1:
-            v += n
-        else:
+    v = 0
+    for n in A:
+        if n > v + 1:
             break
+        v += n
     return v + 1
+
+    # A.sort()
+    # if not A or A[0] != 1:
+    #     return 1
+    # v = 1
+    # for i in range(1, len(A)):
+    #     n = A[i]
+    #     if n <= v or n == v + 1:
+    #         v += n
+    #     else:
+    #         break
+    # return v + 1
 
 # [1, 2, 3, 7]
 #           ^
