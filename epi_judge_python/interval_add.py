@@ -11,8 +11,45 @@ Interval = collections.namedtuple('Interval', ('left', 'right'))
 
 def add_interval(disjoint_intervals: List[Interval],
                  new_interval: Interval) -> List[Interval]:
-    # TODO - you fill in here.
-    return []
+    '''
+    first sort
+    keep appending until overlap is found
+    while overlap, keep taking union
+    append the rest
+    '''
+
+    disjoint_intervals.sort()
+    res = []
+
+    # stage 1
+    i = 0
+    while i < len(disjoint_intervals):
+        interval = disjoint_intervals[i]
+        if interval.right < new_interval.left: # no overlap
+            res.append(interval)
+            i += 1
+        else:
+            break
+
+    # stage 2
+    union_interval = new_interval
+    while i < len(disjoint_intervals):
+        interval = disjoint_intervals[i]
+        if union_interval.right < interval.left: # no more overlap
+            break
+        new_left = min(union_interval.left, interval.left)
+        new_right = max(union_interval.right, interval.right)
+        union_interval = Interval(new_left, new_right)
+        i += 1
+    res.append(union_interval)
+
+    # stage 3
+    while i < len(disjoint_intervals):
+        interval = disjoint_intervals[i]
+        res.append(interval)
+        i += 1
+
+    return res 
 
 
 @enable_executor_hook
