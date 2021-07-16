@@ -2,8 +2,14 @@ from test_framework import generic_test
 
 
 def gcd(x: int, y: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    '''
+    GCD(156,36) = GCD(36,12) = GCD(12, 0) = 12
+    '''
+    if x < y:
+        x, y = y, x
+    if y == 0:
+        return x
+    return gcd(y, x%y)
 
 
 if __name__ == '__main__':
