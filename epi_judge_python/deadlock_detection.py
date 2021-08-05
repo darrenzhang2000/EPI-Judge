@@ -12,6 +12,11 @@ class GraphVertex:
 
 
 def is_deadlocked(graph: List[GraphVertex]) -> bool:
+    '''
+    Reasonings:
+    If a vertex has dependencies, it has to wait until all of the dependencies have
+    finished processing before it can complete its own.
+    '''
     stack = []
     for vertex in graph:
         stack.append(vertex)
