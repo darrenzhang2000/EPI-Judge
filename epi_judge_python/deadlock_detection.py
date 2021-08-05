@@ -4,15 +4,30 @@ from typing import List
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
-
+UNPROCESSED, INPROGRESS, PROCESSED = range(3)
 class GraphVertex:
     def __init__(self) -> None:
         self.edges: List['GraphVertex'] = []
+        self.state = UNPROCESSED
 
 
 def is_deadlocked(graph: List[GraphVertex]) -> bool:
-    # TODO - you fill in here.
-    return True
+    stack = []
+    for vertex in graph:
+        stack.append(vertex)
+        while stack:
+            if vertex.state == UNPROCESSED:
+                vertex.state = 1
+                for neighbor in vertex.edges:
+                    if neighbor.state == PROCESSED:
+                        return True
+                    stack.append(neighbor)
+            elif vertex.state == INPROGRESS:
+                vertex.state = PROCESSED
+            else:
+                stack.pop()
+    return False
+        
 
 
 @enable_executor_hook
